@@ -2,7 +2,7 @@ let grid = document.querySelector(".grid");
 let popup = document.querySelector(".popup");
 let start = document.querySelector(".start");
 let playAgain = document.querySelector(".playAgain");
-let snakeLength = document.querySelector(".snakeLength");
+let scoreDisplay = document.querySelector(".scoreDisplay");
 let width = 20;
 let currentIndex = 0;
 let appleIndex = 0;
@@ -35,7 +35,7 @@ function startGame() {
     randomApple(squares);
     //starts moving the snake arra to the right
     direction = 1;
-    snakeLength.innerHTML = `Snake Length: ${score}`;
+    scoreDisplay.innerHTML = score;
 
     //sets "spped" of snake moving around
     intervalTime = 1000 / speed;
@@ -89,6 +89,7 @@ function eatApple(squares, tail) {
         randomApple(squares);
         score++;
         scoreDisplay.textContent = score;
+
         clearInterval(interval);
         intervalTime = intervalTime * speed;
         interval = setInterval(moveOutcome, intervalTime);
