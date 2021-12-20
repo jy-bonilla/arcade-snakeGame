@@ -8,8 +8,8 @@ let currentIndex = 0;
 let appleIndex = 0;
 let currentSnake = [2, 1, 0];
 let direction = 1;
-let score = 0;
-let speed = 5;
+let score = 3;
+let speed = 1;
 let intervalTime = 0;
 let interval = 0;
 
@@ -33,12 +33,12 @@ function startGame() {
     let squares = document.querySelectorAll(".grid div");
     //calls the function that selects a random square for the apple
     randomApple(squares);
-    //starts moving the snake arra to the right
+    //starts moving the snake array to the right
     direction = 1;
-    scoreDisplay.innerHTML = score;
+    scoreDisplay.innerHTML = `Snake Length: ${score}`;
 
-    //sets "spped" of snake moving around
-    intervalTime = 1000 / speed;
+    //sets "speed" of snake moving around
+    intervalTime = 100 / speed;
 
     //location of snake
     currentSnake = [2, 1, 0];
@@ -66,7 +66,6 @@ function moveSnake(squares) {
     eatApple(squares, tail);
     squares[currentSnake[0]].classList.add("snake");
 };
-
 function checkForHits(squares) {
     if (
         (currentSnake[0] + width >= width * width && direction === width) ||
@@ -81,6 +80,7 @@ function checkForHits(squares) {
     }
 };
 
+
 function eatApple(squares, tail) {
     if (squares[currentSnake[0]].classList.contains("apple")) {
         squares[currentSnake[0]].classList.remove("apple");
@@ -88,8 +88,7 @@ function eatApple(squares, tail) {
         currentSnake.push(tail);
         randomApple(squares);
         score++;
-        scoreDisplay.textContent = score;
-
+        scoreDisplay.textContent = `Snake Length: ${score}`;
         clearInterval(interval);
         intervalTime = intervalTime * speed;
         interval = setInterval(moveOutcome, intervalTime);
@@ -104,20 +103,23 @@ function randomApple(squares) {
 };
 
 function keyDown(e) {
+    //right
     if (e.keyCode === 39) {
-        direction = 1; // right
+        direction = 1;
+        //  up
     } else if (e.keyCode === 38) {
-        direction = -width; //if we press the up arrow, the snake will go ten divs up
+        direction = -width;
+        // left
     } else if (e.keyCode === 37) {
-        direction = -1; // left, the snake will go left one div
+        direction = -1;
+        // down
     } else if (e.keyCode === 40) {
-        direction = +width; // down the snake head will instantly appear 10 divs below from the current div
-    }
+        direction = +width;
+    };
 };
 
 function replay() {
     grid.innerHTML = "";
     createBoard();
     startGame();
-    popup.style.display = "none";
-}
+};
